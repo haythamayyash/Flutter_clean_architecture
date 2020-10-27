@@ -38,7 +38,7 @@ void main() {
 
     test('when success then return correct data', () async {
       getUserSuccess();
-      final User resgiponse = await SUT.call(USER_NAME);
+      final User response = await SUT.call(USER_NAME);
       expect(response, equals(UserTestData.getUser()));
     });
 
