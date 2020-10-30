@@ -7,9 +7,6 @@ import 'package:http/http.dart' as http;
 
 import 'user_remote_data_source.dart';
 
-
-
-
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   var client = http.Client();
 
@@ -17,7 +14,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<List<User>> getUsers() =>
-      _getUsersFromUrl('https://api.github.com/Users');
+      _getUsersFromUrl('https://api.github.com/users');
 
   @override
   Future<User> getUser(String userName) {
@@ -25,8 +22,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   Future<List<User>> _getUsersFromUrl(String url) async {
-    final http.Response response =
-        await client.get(url, headers: {'Content-Type': 'application/json'});
+    final http.Response response = await client.get(url, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
     if (response.statusCode == 200) {
       List<User> users = (json.decode(response.body) as List)
           .map((i) => User.fromJson(i))
